@@ -31,7 +31,7 @@ namespace WinFormsApp1
                 row["ID"] = client.id;
                 row["First_Name"] = client.first_Name;
                 row["Last_Name"] = client.last_Name;
-                row["Age"]= client.age;
+                row["Age"] = client.age;
                 row["Location"] = client.location;
                 row["Date_Time"] = client.date_time;
 
@@ -42,6 +42,63 @@ namespace WinFormsApp1
             this.EmployeeTable.DataSource = dataTable;
         }
 
-       
+        private void btnAddClient_Click(object sender, EventArgs e)
+        {
+            Create_Edit create_Edit = new Create_Edit();
+            if (create_Edit.ShowDialog() == DialogResult.OK)
+            {
+                ReadClient();
+            }
+
+        }
+
+        private void btnEditClient_Click(object sender, EventArgs e)
+        {
+            var val = this.EmployeeTable.SelectedRows[0].Cells[0].Value.ToString();
+            if (val == null || val.Length == 0)
+            {
+                return;
+            }
+            int clientId = int.Parse(val);
+
+            var data = new EmployeeData();
+            var client = data.GetClient(clientId);
+
+            if (client == null) return;
+
+            Create_Edit create_Edit = new Create_Edit();
+            create_Edit.EditClient(client);
+            if (create_Edit.ShowDialog() == DialogResult.OK)
+            {
+                ReadClient();
+            }
+        }
+
+        private void btnDeleteClient_Click(object sender, EventArgs e)
+        {
+            var val = this.EmployeeTable.SelectedRows[0].Cells[0].Value.ToString();
+            if (val == null || val.Length == 0)
+            {
+                return;
+            }
+            int clientId = int.Parse(val);
+
+            var data = new EmployeeData();
+            var client = data.GetClient(clientId);
+
+            if (client == null) return;
+            DialogResult dialogresult = MessageBox.Show("Are you sure that you want to delete this client/Employee?", "Delete Client/Employee", MessageBoxButtons.YesNo);
+            if (dialogresult == DialogResult.Yes)
+            {
+                data.DeleteClient(client);
+            }
+            else
+            {
+                return;
+            }
+
+            ReadClient();
+           
+        }
     }
 }

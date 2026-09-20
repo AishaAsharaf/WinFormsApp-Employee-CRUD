@@ -57,6 +57,7 @@
             btnAddClient.TabIndex = 1;
             btnAddClient.Text = "Add Client";
             btnAddClient.UseVisualStyleBackColor = true;
+            btnAddClient.Click += btnAddClient_Click;
             // 
             // btnEditClient
             // 
@@ -68,6 +69,7 @@
             btnEditClient.TabIndex = 2;
             btnEditClient.Text = "Edit Client";
             btnEditClient.UseVisualStyleBackColor = true;
+            btnEditClient.Click += btnEditClient_Click;
             // 
             // btnDeleteClient
             // 
@@ -79,6 +81,7 @@
             btnDeleteClient.TabIndex = 3;
             btnDeleteClient.Text = "Delete Client";
             btnDeleteClient.UseVisualStyleBackColor = true;
+            btnDeleteClient.Click += btnDeleteClient_Click;
             // 
             // EmployeeTable
             // 

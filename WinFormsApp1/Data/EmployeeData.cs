@@ -60,7 +60,7 @@ namespace WinFormsApp1.Data
                 {
                     sqlConnection.Open();
 
-                    string sqlCommand = "SELECT * Employees WHERE id=@id";
+                    string sqlCommand = "SELECT * FROM Employees WHERE id=@id";
                     using (SqlCommand command = new SqlCommand(sqlCommand, sqlConnection))
                     {
                         command.Parameters.AddWithValue("@id", id);
@@ -74,7 +74,7 @@ namespace WinFormsApp1.Data
                                 client.last_Name = reader.GetString(2);
                                 client.age = reader.GetInt32(3);
                                 client.location = reader.GetString(4);
-                                client.date_time = reader.GetString(5).ToString();
+                                client.date_time = reader.GetDateTime(5).ToString();
 
                                 return client;
 
@@ -100,17 +100,16 @@ namespace WinFormsApp1.Data
                     {
                         sqlConnection.Open();
 
-                        string sqlCommand = "INSERT INTO Employees" +
-                                            "VALUES(First_Name,Last_Name,Age,Location)"+
-                                            "(@First_Name, @Last_Name, @Age, @Location);"
+                        string sqlCommand = "INSERT INTO Employees(First_Name,Last_Name,Age,Location)" +
+                                            "VALUES(@First_Name, @Last_Name, @Age, @Location);"
                             ;
                                         
                         using (SqlCommand command = new SqlCommand(sqlCommand, sqlConnection))
                         {
                             command.Parameters.AddWithValue("@First_Name", client.first_Name);
                             command.Parameters.AddWithValue("@Last_Name", client.last_Name);
-                            command.Parameters.AddWithValue("@Last_Name", client.age);
-                            command.Parameters.AddWithValue("@Last_Name", client.location);
+                            command.Parameters.AddWithValue("@Age", client.age);
+                            command.Parameters.AddWithValue("@Location", client.location);
 
                             command.ExecuteNonQuery();
                         }
@@ -154,15 +153,18 @@ namespace WinFormsApp1.Data
                     sqlConnection.Open();
 
                     string sqlCommand = "UPDATE Employees" +
-                                        "SET first_name=@First_Name, last_name=@Last_Name, age=@Age, location=@Location" +
-                                        "WHERE id=@id;";
+                                        " SET First_Name = @First_Name, " +
+                                        " Last_Name = @Last_Name, " +
+                                        " Age=@Age, " +
+                                        " Location = @Location" +
+                                        " WHERE id=@id;";
                     using (SqlCommand command = new SqlCommand(sqlCommand, sqlConnection))
                     {
                         command.Parameters.AddWithValue("@id", client.id);
                         command.Parameters.AddWithValue("@First_Name", client.first_Name);
                         command.Parameters.AddWithValue("@Last_Name", client.last_Name);
-                        command.Parameters.AddWithValue("@Last_Name", client.age);
-                        command.Parameters.AddWithValue("@Last_Name", client.location);
+                        command.Parameters.AddWithValue("@Age", client.age);
+                        command.Parameters.AddWithValue("@Location", client.location);
                         command.ExecuteNonQuery();
 
                     }
